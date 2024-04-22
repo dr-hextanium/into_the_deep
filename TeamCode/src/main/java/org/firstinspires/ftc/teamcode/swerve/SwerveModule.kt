@@ -12,8 +12,10 @@ import dev.frozenmilk.dairy.calcified.hardware.controller.compiler.DoubleControl
 import dev.frozenmilk.dairy.calcified.hardware.controller.compiler.UnitControllerCompiler
 import dev.frozenmilk.dairy.calcified.hardware.controller.implementation.DoubleController
 import dev.frozenmilk.dairy.calcified.hardware.motor.CalcifiedMotor
+import dev.frozenmilk.dairy.calcified.hardware.motor.Direction
 import dev.frozenmilk.dairy.calcified.hardware.motor.ZeroPowerBehaviour
 import dev.frozenmilk.dairy.calcified.hardware.pwm.CalcifiedContinuousServo
+import dev.frozenmilk.dairy.calcified.hardware.sensor.CalcifiedAnalogInput
 import dev.frozenmilk.dairy.core.util.supplier.numeric.EnhancedUnitSupplier
 import dev.frozenmilk.dairy.core.util.supplier.numeric.MotionComponents
 import dev.frozenmilk.util.units.angle.Angle
@@ -34,6 +36,7 @@ import kotlin.math.PI
 
 class SwerveModule(port: Int) {
     val encoder: EnhancedUnitSupplier<AngleUnit, Angle>
+    val analog: CalcifiedAnalogInput
 
     val motor: CalcifiedMotor
     val servo: CalcifiedContinuousServo
@@ -44,7 +47,11 @@ class SwerveModule(port: Int) {
     val drive: ComplexController<Distance>
     val turn: ComplexController<Angle>
 
-    var target = Vector2D()
+    var target = 0.deg
+    var flipped = false
+
+    val angularError: Angle
+        get() = (target - encoder.position).coerceIn((-180).deg, 180.deg)
 
     init {
         motor = Calcified.controlHub.getMotor(port)
@@ -53,8 +60,11 @@ class SwerveModule(port: Int) {
 
         servo = Calcified.controlHub.getContinuousServo(port)
 
-        encoder = Calcified.controlHub.getAnalogInput(port)
-                .let { EnhancedUnitSupplier({ (360.0 * (it.position / 3.3)).wrappedDeg }) }
+        servo.direction = Direction.REVERSE
+
+        analog = Calcified.controlHub.getAnalogInput(port)
+
+        encoder = EnhancedUnitSupplier({ (360.0 * (analog.supplier.get() / 3300.0)).wrappedDeg })
 
         driveCompiler = UnitControllerCompiler<DistanceUnit, Distance>()
                 .add(motor)
@@ -68,18 +78,24 @@ class SwerveModule(port: Int) {
                 .append(UnitPComponent(TurnPID.P))
                 .append(UnitDComponent(TurnPID.D))
 
-        drive = driveCompiler.compile({ this.target.magnitude.intoInches() }, MotionComponents.VELOCITY, 0.mm)
-        turn = turnCompiler.compile({ this.target.theta }, MotionComponents.VELOCITY, 0.deg)
+        drive = driveCompiler.compile(0.inches, MotionComponents.VELOCITY, 0.inches)
+        turn = turnCompiler.compile(0.deg, MotionComponents.POSITION, (0.5).deg)
     }
 
-    fun update(target: Vector2D) {
-        this.target = target
+    fun update(speed: Distance, angle: Angle) {
+        target = angle
+
+        if (angularError.abs() > 180.deg) {
+            target = target.intoWrapping() - 180.wrappedDeg
+            flipped = true
+        } else { flipped = false }
+
+        drive.target = speed * (if (flipped) -1.0 else 1.0)
+        turn.target = target
 
         drive.update()
         turn.update()
     }
-
-    fun write() { }
 
     companion object {
         object Hardware {
@@ -107,13 +123,13 @@ class SwerveModule(port: Int) {
         }
 
         object DrivePID {
-            const val P = 0.0004
+            const val P = 0.0005
             const val D = 0.0
             const val S = 0.0
         }
 
         object TurnPID {
-            const val P = 0.001
+            const val P = 0.4
             const val D = 0.0
             const val S = 0.0
         }
