@@ -1,16 +1,11 @@
-package org.firstinspires.ftc.teamcode.swerve
+package org.firstinspires.ftc.teamcode.swerve.hardware.swerve
 
 import dev.frozenmilk.dairy.calcified.Calcified
 import dev.frozenmilk.dairy.calcified.hardware.controller.ComplexController
 import dev.frozenmilk.dairy.calcified.hardware.controller.ControllerCompiler
-import dev.frozenmilk.dairy.calcified.hardware.controller.calculation.DoubleDComponent
-import dev.frozenmilk.dairy.calcified.hardware.controller.calculation.DoubleIComponent
-import dev.frozenmilk.dairy.calcified.hardware.controller.calculation.DoublePComponent
 import dev.frozenmilk.dairy.calcified.hardware.controller.calculation.UnitDComponent
 import dev.frozenmilk.dairy.calcified.hardware.controller.calculation.UnitPComponent
-import dev.frozenmilk.dairy.calcified.hardware.controller.compiler.DoubleControllerCompiler
 import dev.frozenmilk.dairy.calcified.hardware.controller.compiler.UnitControllerCompiler
-import dev.frozenmilk.dairy.calcified.hardware.controller.implementation.DoubleController
 import dev.frozenmilk.dairy.calcified.hardware.motor.CalcifiedMotor
 import dev.frozenmilk.dairy.calcified.hardware.motor.Direction
 import dev.frozenmilk.dairy.calcified.hardware.motor.ZeroPowerBehaviour
@@ -25,13 +20,8 @@ import dev.frozenmilk.util.units.angle.wrappedDeg
 import dev.frozenmilk.util.units.distance.Distance
 import dev.frozenmilk.util.units.distance.DistanceUnit
 import dev.frozenmilk.util.units.distance.DistanceUnits
-import dev.frozenmilk.util.units.distance.feet
 import dev.frozenmilk.util.units.distance.inches
-import dev.frozenmilk.util.units.distance.meters
 import dev.frozenmilk.util.units.distance.mm
-import dev.frozenmilk.util.units.position.Vector2D
-import org.firstinspires.ftc.teamcode.swerve.SwerveModule.Companion.Hardware.max_vel
-import org.firstinspires.ftc.teamcode.swerve.SwerveModule.Companion.Hardware.ticks_per_inch
 import kotlin.math.PI
 
 class SwerveModule(port: Int) {

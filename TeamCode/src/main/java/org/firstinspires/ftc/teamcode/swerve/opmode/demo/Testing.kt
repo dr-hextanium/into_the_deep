@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.swerve
+package org.firstinspires.ftc.teamcode.swerve.opmode.demo
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
@@ -8,7 +8,8 @@ import dev.frozenmilk.util.units.angle.rad
 import dev.frozenmilk.util.units.angle.wrappedRad
 import dev.frozenmilk.util.units.distance.DistanceUnits
 import dev.frozenmilk.util.units.position.Vector2D
-import org.firstinspires.ftc.teamcode.swerve.SwerveModule.Companion.Hardware.max_vel
+import org.firstinspires.ftc.teamcode.swerve.hardware.swerve.SwerveModule.Companion.Hardware.max_vel
+import org.firstinspires.ftc.teamcode.swerve.hardware.swerve.Swerve
 import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.math.hypot
