@@ -1,16 +1,20 @@
 package org.firstinspires.ftc.teamcode.intothedeep.hardware.swerve
 
 import dev.frozenmilk.util.units.angle.Angle
+import dev.frozenmilk.util.units.distance.Distance
 import dev.frozenmilk.util.units.distance.feet
 import dev.frozenmilk.util.units.distance.meters
 import dev.frozenmilk.util.units.position.Vector2D
 import org.firstinspires.ftc.teamcode.intothedeep.hardware.swerve.SwerveModule.Location
+import java.util.function.Supplier
 
 class Swerve {
-    val fr = SwerveModule(Location.FRONT_RIGHT)
-    val fl = SwerveModule(Location.BACK_RIGHT)
-    val br = SwerveModule(Location.FRONT_LEFT)
-    val bl = SwerveModule(Location.BACK_LEFT)
+    val states: Supplier<List<Distance>> = Supplier { modules.map { it.drive.output } }
+
+    val fr = SwerveModule(states, Location.FRONT_RIGHT)
+    val fl = SwerveModule(states, Location.BACK_RIGHT)
+    val br = SwerveModule(states, Location.FRONT_LEFT)
+    val bl = SwerveModule(states, Location.BACK_LEFT)
 
     val modules = listOf(fr, fl, br, bl)
 

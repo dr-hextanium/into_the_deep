@@ -20,9 +20,11 @@ import dev.frozenmilk.util.units.distance.inches
 import dev.frozenmilk.util.units.position.Vector2D
 import org.firstinspires.ftc.teamcode.intothedeep.hardware.Robot
 import org.firstinspires.ftc.teamcode.intothedeep.util.AngularAnalogEncoder
+import org.firstinspires.ftc.teamcode.intothedeep.util.UnitNormalizationComponent
+import java.util.function.Supplier
 import kotlin.math.sign
 
-class SwerveModule(location: Location) {
+class SwerveModule(states: Supplier<List<Distance>>, location: Location) {
     val encoder: AngularAnalogEncoder
     val servo: CalcifiedContinuousServo
     val motor: CalcifiedMotor
@@ -55,6 +57,7 @@ class SwerveModule(location: Location) {
             .withSupplier(motorEncoder)
             .append(UnitPComponent(DrivePID.P))
             .append(UnitDComponent(DrivePID.D))
+            .append(UnitNormalizationComponent(states))
 
         val turnCompiler = UnitControllerCompiler<AngleUnit, Angle>()
             .add(servo)

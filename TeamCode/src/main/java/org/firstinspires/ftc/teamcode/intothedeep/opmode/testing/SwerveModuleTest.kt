@@ -8,12 +8,13 @@ import dev.frozenmilk.util.units.distance.inches
 import dev.frozenmilk.util.units.distance.mm
 import dev.frozenmilk.util.units.position.Vector2D
 import org.firstinspires.ftc.teamcode.intothedeep.hardware.swerve.SwerveModule
+import java.util.function.Supplier
 import kotlin.math.atan2
 
 @TeleOp(group = "Testing")
 @Calcified.Attach
 class SwerveModuleTest : OpMode() {
-    val module by lazy { SwerveModule(location) }
+    val module by lazy { SwerveModule({ listOf(0.inches) }, location) }
 
     override fun init() { module }
 
