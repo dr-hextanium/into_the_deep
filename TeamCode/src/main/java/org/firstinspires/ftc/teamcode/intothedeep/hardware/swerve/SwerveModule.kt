@@ -66,6 +66,7 @@ class SwerveModule(location: Location) {
         turn = turnCompiler.compile(0.deg, MotionComponents.POSITION, (0.25).deg)
     }
 
+    fun target(x: Distance, y: Distance) { this.target = Vector2D(x, y) }
     fun target(target: Vector2D) { this.target = target }
 
     fun update() {
