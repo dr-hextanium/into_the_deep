@@ -35,7 +35,7 @@ class SwerveDrive : OpMode() {
         val (x, y) = Pair(-gamepad1.left_stick_y.toDouble(), gamepad1.left_stick_x.toDouble())
         val (v, w) = Pair(540.linearDeg * gamepad1.left_trigger.toDouble(), 540.linearDeg * gamepad1.right_trigger.toDouble())
 
-        val velocity = Vector2D(maxVel * x, maxVel * y).rotate(-heading)
+        val velocity = Vector2D(maxVel * x, maxVel * y)
         val rotation = (v - w).intoLinear()
 
         if (gamepad1.left_stick_button) imu.resetYaw()

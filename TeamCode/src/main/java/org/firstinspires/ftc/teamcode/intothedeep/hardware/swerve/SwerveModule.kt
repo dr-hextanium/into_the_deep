@@ -30,6 +30,7 @@ class SwerveModule(states: Supplier<List<Distance>>, location: Location) {
     val motor: CalcifiedMotor
 
     val drive: ComplexController<Distance>
+    val raw: ComplexController<Distance>
     val turn: ComplexController<Angle>
 
     var target = Vector2D(0.inches, 0.deg)
@@ -59,6 +60,11 @@ class SwerveModule(states: Supplier<List<Distance>>, location: Location) {
             .append(UnitDComponent(DrivePID.D))
             .append(UnitNormalizationComponent(states))
 
+        val rawCompiler = UnitControllerCompiler<DistanceUnit, Distance>()
+            .withSupplier(motorEncoder)
+            .append(UnitPComponent(DrivePID.P))
+            .append(UnitDComponent(DrivePID.D))
+
         val turnCompiler = UnitControllerCompiler<AngleUnit, Angle>()
             .add(servo)
             .withSupplier(wrapper)
@@ -66,6 +72,7 @@ class SwerveModule(states: Supplier<List<Distance>>, location: Location) {
             .append(UnitDComponent(TurnPID.D))
 
         drive = driveCompiler.compile(0.inches, MotionComponents.VELOCITY, 0.inches)
+        raw = rawCompiler.compile(0.inches, MotionComponents.VELOCITY, 0.inches)
         turn = turnCompiler.compile(0.deg, MotionComponents.POSITION, (0.25).deg)
     }
 
@@ -76,9 +83,11 @@ class SwerveModule(states: Supplier<List<Distance>>, location: Location) {
         val speed = target.magnitude.intoInches()
         val angle = target.theta.intoDegrees()
 
+        raw.target = speed * angle.value.sign
         drive.target = speed * angle.value.sign
         turn.target = angle
 
+        raw.update()
         drive.update()
         turn.update()
     }

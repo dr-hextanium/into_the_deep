@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.intothedeep.hardware.swerve.SwerveModule.L
 import java.util.function.Supplier
 
 class Swerve {
-    val states: Supplier<List<Distance>> = Supplier { modules.map { it.drive.output } }
+    val states: Supplier<List<Distance>> = Supplier { modules.map { it.raw.output } }
 
     val fr = SwerveModule(states, Location.FRONT_RIGHT)
     val fl = SwerveModule(states, Location.BACK_RIGHT)
