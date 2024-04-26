@@ -37,6 +37,10 @@ class Swerve {
         modules.forEach { it.update() }
     }
 
+    fun telemetry(): String {
+        return modules.joinToString("\n") { it.telemetry() }
+    }
+
     companion object {
         val maxVel = 7.feet
 

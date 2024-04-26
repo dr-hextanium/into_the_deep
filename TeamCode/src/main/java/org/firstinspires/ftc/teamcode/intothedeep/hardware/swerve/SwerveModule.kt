@@ -13,6 +13,8 @@ import dev.frozenmilk.dairy.core.util.supplier.numeric.MotionComponents
 import dev.frozenmilk.util.units.angle.Angle
 import dev.frozenmilk.util.units.angle.AngleUnit
 import dev.frozenmilk.util.units.angle.deg
+import dev.frozenmilk.util.units.angle.linearDeg
+import dev.frozenmilk.util.units.angle.wrappedDeg
 import dev.frozenmilk.util.units.distance.Distance
 import dev.frozenmilk.util.units.distance.DistanceUnit
 import dev.frozenmilk.util.units.distance.DistanceUnits
@@ -37,6 +39,11 @@ class SwerveModule(states: Supplier<List<Distance>>, location: Location) {
 
     val error
         get() = target.theta.findError(encoder.get())
+
+    var flipped = false
+
+    val flipModifier
+        get() = if (flipped) -1.0 else 1.0
 
     init {
         encoder = AngularAnalogEncoder(location.ports.servoEncoder).zero(location.offset)
@@ -83,13 +90,22 @@ class SwerveModule(states: Supplier<List<Distance>>, location: Location) {
         val speed = target.magnitude.intoInches()
         val angle = target.theta.intoDegrees()
 
-        raw.target = speed * angle.value.sign
-        drive.target = speed * angle.value.sign
-        turn.target = angle
+        flipped = error.abs() > 180.deg
+
+        raw.target = speed * flipModifier
+        drive.target = speed * flipModifier
+
+        turn.target = if (flipped) {
+            (angle.intoLinear() - 180.linearDeg)
+        } else angle
 
         raw.update()
         drive.update()
         turn.update()
+    }
+
+    fun telemetry(): String {
+        return "target: $target, flipped: $flipped, error: ${error.intoDegrees()}, points: ${encoder.get().intoDegrees()}"
     }
 
     enum class Location(
@@ -110,7 +126,7 @@ class SwerveModule(states: Supplier<List<Distance>>, location: Location) {
         }
 
         object TurnPID {
-            const val P = 0.4
+            const val P = 0.3
             const val D = 0.0
             const val S = 0.0
         }
