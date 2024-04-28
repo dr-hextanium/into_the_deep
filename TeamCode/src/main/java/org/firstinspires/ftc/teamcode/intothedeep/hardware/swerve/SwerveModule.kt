@@ -8,8 +8,8 @@ import dev.frozenmilk.dairy.calcified.hardware.controller.compiler.UnitControlle
 import dev.frozenmilk.dairy.calcified.hardware.motor.CalcifiedMotor
 import dev.frozenmilk.dairy.calcified.hardware.motor.Direction
 import dev.frozenmilk.dairy.calcified.hardware.pwm.CalcifiedContinuousServo
-import dev.frozenmilk.dairy.core.util.supplier.numeric.EnhancedUnitSupplier
 import dev.frozenmilk.dairy.core.util.supplier.numeric.MotionComponents
+import dev.frozenmilk.dairy.core.util.supplier.numeric.unit.EnhancedUnitSupplier
 import dev.frozenmilk.util.units.angle.Angle
 import dev.frozenmilk.util.units.angle.AngleUnit
 import dev.frozenmilk.util.units.angle.deg
