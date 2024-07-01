@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.intothedeep.hardware.swerve
+package org.firstinspires.ftc.teamcode.intothedeep.hardware.old_swerve
 
 import dev.frozenmilk.dairy.calcified.Calcified
 import dev.frozenmilk.dairy.calcified.hardware.controller.ComplexController
@@ -14,7 +14,6 @@ import dev.frozenmilk.util.units.angle.Angle
 import dev.frozenmilk.util.units.angle.AngleUnit
 import dev.frozenmilk.util.units.angle.deg
 import dev.frozenmilk.util.units.angle.linearDeg
-import dev.frozenmilk.util.units.angle.wrappedDeg
 import dev.frozenmilk.util.units.distance.Distance
 import dev.frozenmilk.util.units.distance.DistanceUnit
 import dev.frozenmilk.util.units.distance.DistanceUnits
@@ -24,9 +23,8 @@ import org.firstinspires.ftc.teamcode.intothedeep.hardware.Robot
 import org.firstinspires.ftc.teamcode.intothedeep.util.AngularAnalogEncoder
 import org.firstinspires.ftc.teamcode.intothedeep.util.UnitNormalizationComponent
 import java.util.function.Supplier
-import kotlin.math.sign
 
-class SwerveModule(states: Supplier<List<Distance>>, location: Location) {
+class OldSwerveModule(states: Supplier<List<Distance>>, location: Location) {
     val encoder: AngularAnalogEncoder
     val servo: CalcifiedContinuousServo
     val motor: CalcifiedMotor

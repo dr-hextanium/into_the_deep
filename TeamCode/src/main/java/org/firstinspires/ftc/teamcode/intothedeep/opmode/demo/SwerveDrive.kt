@@ -12,13 +12,13 @@ import dev.frozenmilk.util.units.angle.rad
 import dev.frozenmilk.util.units.angle.wrappedDeg
 import dev.frozenmilk.util.units.position.Vector2D
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
-import org.firstinspires.ftc.teamcode.intothedeep.hardware.swerve.Swerve
-import org.firstinspires.ftc.teamcode.intothedeep.hardware.swerve.Swerve.Companion.maxVel
+import org.firstinspires.ftc.teamcode.intothedeep.hardware.old_swerve.OldSwerve
+import org.firstinspires.ftc.teamcode.intothedeep.hardware.old_swerve.OldSwerve.Companion.maxVel
 
 @TeleOp(group = "Testing")
 @Calcified.Attach
 class SwerveDrive : OpMode() {
-    val swerve by lazy { Swerve() }
+    val oldSwerve by lazy { OldSwerve() }
     val imu by lazy { hardwareMap["imu"] as IMU }
 
     val heading: Angle
@@ -27,7 +27,7 @@ class SwerveDrive : OpMode() {
             .wrappedDeg
 
     override fun init() {
-        swerve
+        oldSwerve
 
         imu.initialize(IMU.Parameters(orientation))
     }
@@ -45,7 +45,7 @@ class SwerveDrive : OpMode() {
         telemetry.addData("rotation", rotation)
         telemetry.addData("heading", heading)
 
-        swerve.update(velocity, rotation)
+        oldSwerve.update(velocity, rotation)
 
         val angle = 180.deg
         val second = (2.6).rad
