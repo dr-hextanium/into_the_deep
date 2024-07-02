@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.intothedeep.opmode.testing
+package org.firstinspires.ftc.teamcode.intothedeep.old.old_opmode.testing
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.AnalogInput
 import dev.frozenmilk.dairy.calcified.Calcified
-import org.firstinspires.ftc.teamcode.intothedeep.util.AngularAnalogEncoder
+import org.firstinspires.ftc.teamcode.intothedeep.old.old_util.AngularAnalogEncoder
 
 @TeleOp(group = "Testing")
 @Calcified.Attach

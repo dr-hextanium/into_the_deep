@@ -1,9 +1,8 @@
-package org.firstinspires.ftc.teamcode.intothedeep.util
+package org.firstinspires.ftc.teamcode.intothedeep.old.old_util
 
-import com.qualcomm.robotcore.hardware.DcMotor
 import dev.frozenmilk.dairy.calcified.Calcified
 import dev.frozenmilk.dairy.calcified.hardware.sensor.CalcifiedAnalogInput
-import dev.frozenmilk.dairy.core.util.supplier.numeric.EnhancedUnitSupplier
+import dev.frozenmilk.dairy.core.util.supplier.numeric.unit.EnhancedUnitSupplier
 import dev.frozenmilk.util.units.angle.Angle
 import dev.frozenmilk.util.units.angle.AngleUnit
 import dev.frozenmilk.util.units.angle.wrappedDeg
@@ -18,8 +17,6 @@ class AngularAnalogEncoder(port: Int) : Supplier<Angle> {
         private set(value) { field = value }
     var offset = 0.wrappedDeg
         private set(value) { field = value }
-
-
 
     init {
         analog = Calcified.controlHub.getAnalogInput(port)

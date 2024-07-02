@@ -1,22 +1,19 @@
-package org.firstinspires.ftc.teamcode.intothedeep.opmode.demo
+package org.firstinspires.ftc.teamcode.intothedeep.old.old_opmode.demo
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.IMU
 import dev.frozenmilk.dairy.calcified.Calcified
-import dev.frozenmilk.dairy.calcified.hardware.motor.MotorControllerGroup
 import dev.frozenmilk.util.units.angle.Angle
 import dev.frozenmilk.util.units.angle.deg
 import dev.frozenmilk.util.units.angle.linearDeg
 import dev.frozenmilk.util.units.angle.rad
 import dev.frozenmilk.util.units.angle.wrappedDeg
-import dev.frozenmilk.util.units.angle.wrappedRad
 import dev.frozenmilk.util.units.position.Vector2D
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
-import org.firstinspires.ftc.teamcode.intothedeep.hardware.swerve.Swerve
-import org.firstinspires.ftc.teamcode.intothedeep.hardware.swerve.Swerve.Companion.maxVel
+import org.firstinspires.ftc.teamcode.intothedeep.old.old_hardware.old_swerve.Swerve
+import org.firstinspires.ftc.teamcode.intothedeep.old.old_hardware.old_swerve.Swerve.Companion.maxVel
 
 @TeleOp(group = "Testing")
 @Calcified.Attach
