@@ -10,6 +10,7 @@ class SwerveDrive(hardwareMap: HardwareMap) {
 			"front left drive",
 			"front left steer",
 			"front left encoder",
+			1.0,
 			hardwareMap,
 			steerDirection = REVERSE
 		)
@@ -20,6 +21,7 @@ class SwerveDrive(hardwareMap: HardwareMap) {
 			"front right drive",
 			"front right steer",
 			"front right encoder",
+			3.0,
 			hardwareMap,
 			steerDirection = REVERSE
 		)
@@ -30,6 +32,7 @@ class SwerveDrive(hardwareMap: HardwareMap) {
 			"back left drive",
 			"back left steer",
 			"back left encoder",
+			-4.0,
 			hardwareMap,
 			steerDirection = REVERSE
 		)
@@ -40,6 +43,7 @@ class SwerveDrive(hardwareMap: HardwareMap) {
 			"back right drive",
 			"back right steer",
 			"back right encoder",
+			-20.0,
 			hardwareMap,
 			steerDirection = REVERSE
 		)
@@ -50,14 +54,23 @@ class SwerveDrive(hardwareMap: HardwareMap) {
 	val modules by lazy { listOf(frontLeft, frontRight, backLeft, backRight) }
 
 	fun command(V: Vector2D, omega: Double) {
-		val A = V.x - (omega * halved)
-		val B = V.x + (omega * halved)
-		val C = V.y - (omega * halved)
-		val D = V.y + (omega * halved)
+		val u = (omega * halved)
+
+		val A = V.x - u
+		val B = V.x + u
+		val C = V.y - u
+		val D = V.y + u
+
+		// ! TODO: figure out why
+
+//		val fR = Vector2D(B, C)
+//		val fL = Vector2D(B, D)
+//		val bR = Vector2D(A, C)
+//		val bL = Vector2D(A, D)
 
 		val fR = Vector2D(B, C)
-		val fL = Vector2D(B, D)
-		val bR = Vector2D(A, C)
+		val bR = Vector2D(B, D)
+		val fL = Vector2D(A, C)
 		val bL = Vector2D(A, D)
 
 		val commands = listOf(fL, fR, bL, bR)

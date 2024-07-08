@@ -7,12 +7,14 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.teamcode.intothedeep.util.PDController
 import org.firstinspires.ftc.teamcode.intothedeep.util.Vector2D
+import kotlin.math.sign
 
 
 class SwerveModule(
 	val driveName: String,
 	val steerName: String,
 	val encoderName: String,
+	val offset: Double,
 
 	hardwareMap: HardwareMap,
 
@@ -26,9 +28,9 @@ class SwerveModule(
 	private val controller = PDController(kP, kD)
 
 	fun update(command: Vector2D) {
-		drive.power = command.magnitude
-
 		steer.power = controller.run(read(), command.theta)
+
+		drive.power = command.magnitude
 	}
 
 	fun initialize() {
@@ -41,7 +43,7 @@ class SwerveModule(
 	}
 
 	fun read(): Double {
-		return ((encoder.voltage / 3.3) * 360.0) - 180.0
+		return (((encoder.voltage / 3.3) * 360.0 + offset) % 360) - 180.0
 	}
 
 	companion object {

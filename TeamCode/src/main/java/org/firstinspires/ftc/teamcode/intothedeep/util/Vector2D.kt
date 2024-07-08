@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.intothedeep.util
 
+import kotlin.math.acos
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.hypot
@@ -18,6 +19,12 @@ data class Vector2D(val x: Double, val y: Double) {
 	operator fun unaryPlus() = Vector2D(+x, +y)
 
 	override fun toString() = "Vector2D(x = $x, y = $y, theta = $theta)"
+
+	fun rotate90() = Vector2D(y, -x)
+
+	fun angle(other: Vector2D): Double {
+		return acos(((x * other.x) + (y * other.y)) / (magnitude * other.magnitude))
+	}
 
 	companion object {
 		fun polar(magnitude: Double, theta: Double) =
