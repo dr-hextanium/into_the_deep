@@ -25,7 +25,6 @@ class SwerveModule(
 	private var target = 0.0
 	private val controller = PDController(kP, kD)
 
-	fun telemetry() = controller.telemetry
 
 	fun update(newTarget: Double) {
 		target = newTarget

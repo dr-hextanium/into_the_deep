@@ -65,7 +65,6 @@ class SwerveDemo : OpMode() {
 
 		modules.forEach { telemetry.addData("${it.steerName} rotation (degrees)", it.readEncoder()) }
 		modules.forEach { it.update(target) }
-		modules.forEach { telemetry.addData("controller telemetry", it.telemetry()) }
 		telemetry.addData("target", target)
 	}
 }

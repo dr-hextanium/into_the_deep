@@ -10,8 +10,6 @@ class PDController(private val kP: Double, private val kD: Double) {
 	private val timer = ElapsedTime()
 	private var lastTime = now()
 
-	var telemetry = ""
-
 	fun updateTarget(newTarget: Double) {
 		target = newTarget
 	}
@@ -29,10 +27,6 @@ class PDController(private val kP: Double, private val kD: Double) {
 
 		val p = (kP * error)
 		val d = (kD * de / dt)
-
-		telemetry = "error: $error, de: $de, dt: $dt, p term: $p, d term: $d"
-
-		println(telemetry)
 
 		return p + d
 	}
