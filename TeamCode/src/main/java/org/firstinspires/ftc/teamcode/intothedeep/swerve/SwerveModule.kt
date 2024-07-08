@@ -24,15 +24,11 @@ class SwerveModule(
 	private val encoder by lazy { hardwareMap[encoderName] as AnalogInput }
 
 	private val controller = PDController(kP, kD)
-	private var target = 0.0
 
+	fun update(command: Vector2D) {
+		drive.power = command.magnitude
 
-	fun update(newTarget: Double) {
-		target = newTarget
-		controller.updateTarget(target)
-
-		val power = controller.run(read())
-		steer.power = power
+		steer.power = controller.run(read(), command.theta)
 	}
 
 	fun initialize() {
@@ -46,18 +42,6 @@ class SwerveModule(
 
 	fun read(): Double {
 		return ((encoder.voltage / 3.3) * 360.0) - 180.0
-	}
-
-	fun command(V: Vector2D, omega: Double) {
-		val A = V.x - (omega * SwerveDrive.halved)
-		val B = V.x + (omega * SwerveDrive.halved)
-		val C = V.y - (omega * SwerveDrive.halved)
-		val D = V.y + (omega * SwerveDrive.halved)
-
-		val fR = Vector2D(B, C)
-		val fL = Vector2D(B, D)
-		val bR = Vector2D(A, C)
-		val bL = Vector2D(A, D)
 	}
 
 	companion object {
