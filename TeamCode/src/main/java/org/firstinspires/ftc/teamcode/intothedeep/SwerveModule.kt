@@ -12,41 +12,41 @@ import kotlin.math.hypot
 
 class SwerveModule(
 	val driveName: String,
-	private val driveDirection: Direction,
 	val steerName: String,
-	private val steerDirection: Direction,
 	val encoderName: String,
-	private val hardwareMap: HardwareMap
+
+	hardwareMap: HardwareMap,
+
+	private val driveDirection: Direction = Direction.FORWARD,
+	private val steerDirection: Direction = Direction.FORWARD
 ) {
 	private val drive by lazy { hardwareMap[driveName] as DcMotor }
 	private val steer by lazy { hardwareMap[steerName] as CRServo }
 	private val encoder by lazy { hardwareMap[encoderName] as AnalogInput }
 
-	private var target = 0.0
 	private val controller = PDController(kP, kD)
+	private var target = 0.0
 
 
 	fun update(newTarget: Double) {
 		target = newTarget
 		controller.updateTarget(target)
 
-		val power = controller.run(readEncoder())
+		val power = controller.run(read())
 		steer.power = power
 	}
 
 	fun initialize() {
 		drive.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
 		drive.direction = driveDirection
-		drive.power = 0.0
 
-		steer.power = 0.1
-		steer.direction = Direction.REVERSE
+		steer.direction = steerDirection
 
 		encoder
 	}
 
-	fun readEncoder(): Double {
-		return floor((encoder.voltage / 3.3) * 360) - 180
+	fun read(): Double {
+		return ((encoder.voltage / 3.3) * 360.0) - 180.0
 	}
 
 	fun command(V: Vector2D, omega: Double) {
@@ -55,17 +55,10 @@ class SwerveModule(
 		val C = V.y - (omega * SwerveDrive.halved)
 		val D = V.y + (omega * SwerveDrive.halved)
 
-		val fR = calculateModule(B, C)
-		val fL = calculateModule(B, D)
-		val bR = calculateModule(A, C)
-		val bL = calculateModule(A, D)
-	}
-
-	private fun calculateModule(x: Double, y: Double): Vector2D {
-		val speed = hypot(x, y)
-		val angle = atan2(x, y) * (180.0 / Math.PI)
-
-		return Vector2D.polar(speed, angle)
+		val fR = Vector2D(B, C)
+		val fL = Vector2D(B, D)
+		val bR = Vector2D(A, C)
+		val bL = Vector2D(A, D)
 	}
 
 	companion object {

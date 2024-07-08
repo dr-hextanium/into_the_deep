@@ -1,59 +1,57 @@
 package org.firstinspires.ftc.teamcode.intothedeep
 
-import com.qualcomm.robotcore.hardware.DcMotorSimple
+import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE
 import com.qualcomm.robotcore.hardware.HardwareMap
 
-class SwerveDrive(private val hardwareMap: HardwareMap) {
+class SwerveDrive(hardwareMap: HardwareMap) {
 	private val frontLeft by lazy {
 		SwerveModule(
 			"front left drive",
-			DcMotorSimple.Direction.FORWARD,
 			"front left steer",
-			DcMotorSimple.Direction.FORWARD,
 			"front left encoder",
-			hardwareMap
+			hardwareMap,
+			steerDirection = REVERSE
 		)
 	}
+
 	private val frontRight by lazy {
 		SwerveModule(
 			"front right drive",
-			DcMotorSimple.Direction.FORWARD,
 			"front right steer",
-			DcMotorSimple.Direction.FORWARD,
 			"front right encoder",
-			hardwareMap
+			hardwareMap,
+			steerDirection = REVERSE
 		)
 	}
+
 	private val backLeft by lazy {
 		SwerveModule(
 			"back left drive",
-			DcMotorSimple.Direction.FORWARD,
 			"back left steer",
-			DcMotorSimple.Direction.FORWARD,
 			"back left encoder",
-			hardwareMap
+			hardwareMap,
+			steerDirection = REVERSE
 		)
 	}
+
 	private val backRight by lazy {
 		SwerveModule(
 			"back right drive",
-			DcMotorSimple.Direction.FORWARD,
 			"back right steer",
-			DcMotorSimple.Direction.FORWARD,
 			"back right encoder",
-			hardwareMap
+			hardwareMap,
+			steerDirection = REVERSE
 		)
 	}
 
-	fun readEncoders(): List<Double> = listOf(
-		frontLeft.readEncoder(),
-		frontRight.readEncoder(),
-		backLeft.readEncoder(),
-		backRight.readEncoder()
-	)
+	fun initialize() = modules.forEach { it.initialize() }
+
+	val modules by lazy { listOf(frontLeft, frontRight, backLeft, backRight) }
+
+	fun encoders() = modules.map { it.read() }
 
 	companion object {
-		const val track_width = 8.386
+		const val track_width = 8.386 // inches
 		const val halved = track_width / 2.0
 	}
 }
