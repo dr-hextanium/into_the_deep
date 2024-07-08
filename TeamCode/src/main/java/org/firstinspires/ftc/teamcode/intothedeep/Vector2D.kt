@@ -1,10 +1,12 @@
-package org.firstinspires.ftc.teamcode.intothedeep.woah
+package org.firstinspires.ftc.teamcode.intothedeep
 
 import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
 
 data class Vector2D(val x: Double, val y: Double) {
 	val theta: Double
-		get() = atan2(y, x) * (180/Math.PI)
+		get() = atan2(y, x) * (180.0 / Math.PI)
 
 	operator fun plus(other: Vector2D) = Vector2D(x + other.x, y + other.y)
 	operator fun minus(other: Vector2D) = Vector2D(x - other.x, y - other.y)
@@ -21,6 +23,11 @@ data class Vector2D(val x: Double, val y: Double) {
 	}
 
 	override fun toString() = "Vector2D(x = $x, y = $y, theta = $theta)"
+
+	companion object {
+		fun polar(magnitude: Double, theta: Double) =
+			Vector2D(magnitude * cos(theta), magnitude * sin(theta))
+	}
 }
 
 fun main() {

@@ -1,16 +1,11 @@
-package org.firstinspires.ftc.teamcode.intothedeep.woah
+package org.firstinspires.ftc.teamcode.intothedeep
 
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
-import dev.frozenmilk.util.units.distance.inches
-import dev.frozenmilk.util.units.angle.Angle
-import kotlin.math.atan2
-import kotlin.math.pow
-import kotlin.math.sqrt
 
-class SwerveDriveTwo(private val hardwareMap: HardwareMap) {
+class SwerveDrive(private val hardwareMap: HardwareMap) {
 	private val frontLeft by lazy {
-		SwerveModuleTwo(
+		SwerveModule(
 			"front left drive",
 			DcMotorSimple.Direction.FORWARD,
 			"front left steer",
@@ -20,7 +15,7 @@ class SwerveDriveTwo(private val hardwareMap: HardwareMap) {
 		)
 	}
 	private val frontRight by lazy {
-		SwerveModuleTwo(
+		SwerveModule(
 			"front right drive",
 			DcMotorSimple.Direction.FORWARD,
 			"front right steer",
@@ -30,7 +25,7 @@ class SwerveDriveTwo(private val hardwareMap: HardwareMap) {
 		)
 	}
 	private val backLeft by lazy {
-		SwerveModuleTwo(
+		SwerveModule(
 			"back left drive",
 			DcMotorSimple.Direction.FORWARD,
 			"back left steer",
@@ -40,7 +35,7 @@ class SwerveDriveTwo(private val hardwareMap: HardwareMap) {
 		)
 	}
 	private val backRight by lazy {
-		SwerveModuleTwo(
+		SwerveModule(
 			"back right drive",
 			DcMotorSimple.Direction.FORWARD,
 			"back right steer",

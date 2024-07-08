@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.intothedeep.woah
+package org.firstinspires.ftc.teamcode.intothedeep
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
@@ -7,11 +7,11 @@ import kotlin.math.PI
 import kotlin.math.atan2
 
 @TeleOp
-class SwerveDemoTwo : OpMode() {
+class SwerveDemo : OpMode() {
 	private val target = 0.0
 
 	private val frontLeft by lazy {
-		SwerveModuleTwo(
+		SwerveModule(
 			"front left drive",
 			DcMotorSimple.Direction.FORWARD,
 			"front left steer",
@@ -21,7 +21,7 @@ class SwerveDemoTwo : OpMode() {
 		)
 	}
 	private val frontRight by lazy {
-		SwerveModuleTwo(
+		SwerveModule(
 			"front right drive",
 			DcMotorSimple.Direction.FORWARD,
 			"front right steer",
@@ -31,7 +31,7 @@ class SwerveDemoTwo : OpMode() {
 		)
 	}
 	private val backLeft by lazy {
-		SwerveModuleTwo(
+		SwerveModule(
 			"back left drive",
 			DcMotorSimple.Direction.FORWARD,
 			"back left steer",
@@ -41,7 +41,7 @@ class SwerveDemoTwo : OpMode() {
 		)
 	}
 	private val backRight by lazy {
-		SwerveModuleTwo(
+		SwerveModule(
 			"back right drive",
 			DcMotorSimple.Direction.FORWARD,
 			"back right steer",

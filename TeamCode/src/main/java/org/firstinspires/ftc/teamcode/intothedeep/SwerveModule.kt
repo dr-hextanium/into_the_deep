@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.intothedeep.woah
+package org.firstinspires.ftc.teamcode.intothedeep
 
 import com.qualcomm.robotcore.hardware.AnalogInput
 import com.qualcomm.robotcore.hardware.CRServo
@@ -8,11 +8,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 import kotlin.math.atan2
 import kotlin.math.floor
 import kotlin.math.hypot
-import kotlin.math.pow
-import kotlin.math.sqrt
 
 
-class SwerveModuleTwo(
+class SwerveModule(
 	val driveName: String,
 	private val driveDirection: Direction,
 	val steerName: String,
@@ -53,10 +51,10 @@ class SwerveModuleTwo(
 	}
 
 	fun command(V: Vector2D, omega: Double) {
-		val A = V.x - (omega * SwerveDriveTwo.halved)
-		val B = V.x + (omega * SwerveDriveTwo.halved)
-		val C = V.y - (omega * SwerveDriveTwo.halved)
-		val D = V.y + (omega * SwerveDriveTwo.halved)
+		val A = V.x - (omega * SwerveDrive.halved)
+		val B = V.x + (omega * SwerveDrive.halved)
+		val C = V.y - (omega * SwerveDrive.halved)
+		val D = V.y + (omega * SwerveDrive.halved)
 
 		val fR = calculateModule(B, C)
 		val fL = calculateModule(B, D)
@@ -64,11 +62,11 @@ class SwerveModuleTwo(
 		val bL = calculateModule(A, D)
 	}
 
-	private fun calculateModule(x: Double, y: Double): Command {
+	private fun calculateModule(x: Double, y: Double): Vector2D {
 		val speed = hypot(x, y)
 		val angle = atan2(x, y) * (180.0 / Math.PI)
 
-		return Command(speed, angle)
+		return Vector2D.polar(speed, angle)
 	}
 
 	companion object {
