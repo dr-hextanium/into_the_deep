@@ -1,13 +1,12 @@
-package org.firstinspires.ftc.teamcode.intothedeep
+package org.firstinspires.ftc.teamcode.intothedeep.swerve
 
 import com.qualcomm.robotcore.hardware.AnalogInput
 import com.qualcomm.robotcore.hardware.CRServo
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import com.qualcomm.robotcore.hardware.HardwareMap
-import kotlin.math.atan2
-import kotlin.math.floor
-import kotlin.math.hypot
+import org.firstinspires.ftc.teamcode.intothedeep.util.PDController
+import org.firstinspires.ftc.teamcode.intothedeep.util.Vector2D
 
 
 class SwerveModule(
