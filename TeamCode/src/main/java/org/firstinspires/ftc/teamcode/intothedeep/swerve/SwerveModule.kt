@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.CRServo
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import com.qualcomm.robotcore.hardware.HardwareMap
-import org.firstinspires.ftc.teamcode.intothedeep.util.PDController
+import org.firstinspires.ftc.teamcode.intothedeep.util.controllers.AngularPDController
 import org.firstinspires.ftc.teamcode.intothedeep.util.Vector2D
 
 
@@ -24,7 +24,7 @@ class SwerveModule(
 	private val steer by lazy { hardwareMap[steerName] as CRServo }
 	private val encoder by lazy { hardwareMap[encoderName] as AnalogInput }
 
-	private val moduleController = PDController(kPModule, kDModule)
+	private val moduleController = AngularPDController(kPModule, kDModule)
 
 	fun update(command: Vector2D) {
 		steer.power = moduleController.run(read(), command.theta)

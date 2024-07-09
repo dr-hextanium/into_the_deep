@@ -39,8 +39,8 @@ class SwerveDemo : OpMode() {
 
 		telemetry.addData("heading", drive.heading())
 		telemetry.addData("target", drive.targetHeading)
+		telemetry.addData("error", drive.headingController.telemetry)
 		telemetry.addData("x, y", "$x, $y")
 
-		telemetry.addLine(drive.headingController.telem)
 	}
 }
