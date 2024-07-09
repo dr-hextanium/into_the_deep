@@ -15,7 +15,7 @@ class SwerveDemo : OpMode() {
 
 	override fun loop() {
 		val x = gamepad1.left_stick_x.toDouble()
-		val y = -gamepad1.left_stick_y.toDouble()
+		val y = gamepad1.left_stick_y.toDouble()
 
 		drive.modules.forEach {
 			telemetry.addData(
