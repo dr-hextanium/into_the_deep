@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.intothedeep.util.Vector2D
 class SwerveDrive(hardwareMap: HardwareMap) {
 	val headingController = PDController(kPHeading, kDHeading)
 	private val imu by lazy { hardwareMap["imu"] as IMU }
+	var targetHeading = 0.0
 
 	private val frontLeft by lazy {
 		SwerveModule(
@@ -59,13 +60,16 @@ class SwerveDrive(hardwareMap: HardwareMap) {
 
 	fun heading() = -imu.robotYawPitchRollAngles.getYaw(AngleUnit.DEGREES)
 
-	fun adjustHeading(target: Double): Double = headingController.run(heading(), target)
+	fun updateTargetHeading(targetHeading: Double) { this.targetHeading = targetHeading }
+
+	fun adjustHeading() = headingController.run(heading(), targetHeading)
 
 	fun resetHeading() { imu.resetYaw() }
 
 	val modules by lazy { listOf(frontLeft, frontRight, backLeft, backRight) }
 
-	fun command(V: Vector2D, omega: Double) {
+	fun command(V: Vector2D) {
+		val omega = adjustHeading()
 		val u = (omega * halved)
 
 		val A = V.x - u
@@ -96,6 +100,6 @@ class SwerveDrive(hardwareMap: HardwareMap) {
 		const val track_width = 8.386 // inches
 		const val halved = track_width / 2.0
 		const val kPHeading = 0.002
-		const val kDHeading = 0.0
+		const val kDHeading = 0.1
 	}
 }

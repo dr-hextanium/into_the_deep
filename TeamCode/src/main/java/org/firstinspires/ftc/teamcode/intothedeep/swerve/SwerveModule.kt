@@ -51,7 +51,7 @@ class SwerveModule(
 	}
 
 	companion object {
-		const val kPModule = 0.001
+		const val kPModule = 0.006
 		const val kDModule = 0.3
 	}
 }
