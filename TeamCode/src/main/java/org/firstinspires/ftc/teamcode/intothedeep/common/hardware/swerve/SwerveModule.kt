@@ -16,12 +16,16 @@ import org.firstinspires.ftc.teamcode.intothedeep.common.util.normDelta
 import kotlin.math.abs
 import kotlin.math.sign
 
-class SwerveModule(hw: HardwareMap, name: String) {
+class SwerveModule(hw: HardwareMap, name: String, offset: Double) {
     private val input by lazy { hw["$name input"] as AnalogInput }
     private val motor by lazy { hw["$name motor"] as DcMotor }
     private val servo by lazy { hw["$name servo"] as CRServo }
 
-    private val encoder by lazy { AnalogEncoder(input) }
+    private val encoder by lazy {
+        AnalogEncoder(input)
+            .zero(offset)
+            .invert(true)
+    }
 
     private val controller = PIDFController(kP, kI, kD, 0.0)
 
@@ -35,6 +39,8 @@ class SwerveModule(hw: HardwareMap, name: String) {
         motor.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
 
         servo.power = 0.0
+
+        encoder
     }
 
     fun read() { measured = encoder.position() }
